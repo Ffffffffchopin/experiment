@@ -74,6 +74,8 @@ class ImageNet_LT_Handler(Dataset):
     def processing_fromUnet(x,index):
         file_path=os.path.join( 'C:\\Users\\F.F.Chopin\\project\\low-budget-al',x[index])
         picture=Image.open(file_path)
+       # if picture.mode != 'L':
+	        #picture = picture.convert('L')
         img_ndarray = np.asarray(picture)
         if img_ndarray.ndim == 2:
                 img_ndarray = img_ndarray[np.newaxis, ...]
@@ -102,8 +104,13 @@ class ImageNet_LT_Handler(Dataset):
 
     def __getitem__ (self,index):
         y=self.y[index]
+        #print(type(y))
+       # y=torch.as_tensor(y).float().contiguous()
+        y=torch.tensor(y)
+
         x=ImageNet_LT_Handler.processing_fromUnet(self.x,index)
-        x=self.transform(x)
+        #x=ImageNet_LT_Handler.processing_fromEnden(self.x,index)
+        #x=self.transform(x)
         return x,y,index
 
     def __len__(self):

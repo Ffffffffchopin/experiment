@@ -150,10 +150,13 @@ class CIFAR10_Net(nn.Module):
         self.fc2 = nn.Linear(50, 10)
 
     def forward(self, x):
+        print("xx")
         x = F.relu(self.conv1(x))
         x = F.relu(F.max_pool2d(self.conv2(x), 2))
         x = F.relu(F.max_pool2d(self.conv3(x), 2))
+        print(x.shape)
         x = x.view(-1, 1024)
+        print(x.shape)
         e1 = F.relu(self.fc1(x))
         x = F.dropout(e1, training=self.training)
         x = self.fc2(x)

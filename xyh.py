@@ -74,7 +74,7 @@ def process_ImageNet_LT():
 
     #获取图片路径列表
                 image_tmp_path.append(str(line.split()[0]))
-                label_tmp_path.append(str(line.split()[1]))
+                label_tmp_path.append(int(line.split()[1]))
         image_path.append(image_tmp_path)
         label_path.append(label_tmp_path)  
 
