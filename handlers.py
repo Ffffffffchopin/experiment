@@ -70,9 +70,22 @@ class ImageNet_LT_Handler(Dataset):
 }
 
 
-    def __getitem__ (self,index):
-        y=self.y[index]
-        with open(os.path.join( 'C:\\Users\\F.F.Chopin\\project\\low-budget-al',self.x[index]), 'rb') as f:
+    @staticmethod
+    def processing_fromUnet(x,index):
+        file_path=os.path.join( 'C:\\Users\\F.F.Chopin\\project\\low-budget-al',x[index])
+        picture=Image.open(file_path)
+        img_ndarray = np.asarray(picture)
+        if img_ndarray.ndim == 2:
+                img_ndarray = img_ndarray[np.newaxis, ...]
+        else:
+                img_ndarray = img_ndarray.transpose((2, 0, 1))
+
+        img_ndarray = img_ndarray / 255
+        return torch.as_tensor(img_ndarray.copy()).float().contiguous()
+
+    @staticmethod
+    def processing_fromEnden(x,index):
+        with open(os.path.join( 'C:\\Users\\F.F.Chopin\\project\\low-budget-al',x[index]), 'rb') as f:
             data = f.read()
            # sample = Image.open(f).convert('RGB')
             magic = get_int(data[0:4])
@@ -85,7 +98,12 @@ class ImageNet_LT_Handler(Dataset):
             parsed = torch.frombuffer(bytearray(data), dtype=torch.int16,)
            # x=parsed.view(*s)
             x=Image.fromarray(parsed.numpy(),mode='L')
-            x=self.transform(x)
+            return x
+
+    def __getitem__ (self,index):
+        y=self.y[index]
+        x=ImageNet_LT_Handler.processing_fromUnet(self.x,index)
+        x=self.transform(x)
         return x,y,index
 
     def __len__(self):
