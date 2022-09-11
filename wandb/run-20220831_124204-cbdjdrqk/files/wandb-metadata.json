@@ -1,0 +1,18 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.9.12",
+    "heartbeatAt": "2022-08-31T04:42:10.654223",
+    "startedAt": "2022-08-31T04:42:04.904292",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:\\Users\\F.F.Chopin\\project\\deep-active-learning\\demo.py",
+    "codePath": "demo.py",
+    "host": "LAPTOP-LC6N4SIS",
+    "username": "F.F.Chopin",
+    "executable": "C:\\ProgramData\\Anaconda3\\python.exe"
+}

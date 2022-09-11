@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
+import wandb
 
 class Net:
     def __init__(self, net, params, device):
@@ -26,8 +27,9 @@ class Net:
                 out, e1 = self.clf(x)
                 loss = F.cross_entropy(out, y)
                 loss.backward()
-                optimizer.step()
-
+                optimizer.step() 
+            wandb.log({'batch_idx':batch_idx,'loss':loss})
+           
     def predict(self, data):
         self.clf.eval()
         preds = torch.zeros(len(data), dtype=data.Y.dtype)
@@ -38,6 +40,7 @@ class Net:
                 out, e1 = self.clf(x)
                 pred = out.max(1)[1]
                 preds[idxs] = pred.cpu()
+           
         return preds
     
     def predict_prob(self, data):

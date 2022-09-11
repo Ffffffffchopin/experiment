@@ -1,0 +1,14 @@
+{'dataset_name': 'MNIST',
+ 'n_init_labeled': 10000,
+ 'n_query': 1000,
+ 'n_round': 10,
+ 'seed': 1,
+ 'strategy_name': 'RandomSampling'}
+cuda is
+True
+Traceback (most recent call last):
+  File "C:\Users\F.F.Chopin\project\deep-active-learning\demo.py", line 50, in <module>
+    wandb.watch(net)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\wandb\sdk\wandb_watch.py", line 74, in watch
+    raise ValueError(
+ValueError: Expected a pytorch model (torch.nn.Module). Received <class 'nets.Net'>

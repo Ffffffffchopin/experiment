@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from torchvision import datasets
+from xyh import process_ImageNet_LT
 
 class Data:
     def __init__(self, X_train, Y_train, X_test, Y_test, handler):
@@ -58,3 +59,7 @@ def get_CIFAR10(handler):
     data_train = datasets.CIFAR10('./data/CIFAR10', train=True, download=True)
     data_test = datasets.CIFAR10('./data/CIFAR10', train=False, download=True)
     return Data(data_train.data[:40000], torch.LongTensor(data_train.targets)[:40000], data_test.data[:40000], torch.LongTensor(data_test.targets)[:40000], handler)
+
+def get_ImageNet_LT(handler):
+    image_path,label_path=process_ImageNet_LT()
+    return Data(image_path[0],label_path[0],image_path[1],label_path[1],handler)
