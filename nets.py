@@ -25,7 +25,7 @@ class Net:
                 x, y = x.to(self.device), y.to(self.device)
                 optimizer.zero_grad()
                 out, e1 = self.clf(x)
-                loss = F.cross_entropy(out, y)
+                loss = F.cross_entropy(out, y.long())
                 loss.backward()
                 optimizer.step() 
             wandb.log({'batch_idx':batch_idx,'loss':loss})
@@ -146,7 +146,7 @@ class CIFAR10_Net(nn.Module):
         self.conv1 = nn.Conv2d(3, 32, kernel_size=5)
         self.conv2 = nn.Conv2d(32, 32, kernel_size=5)
         self.conv3 = nn.Conv2d(32, 64, kernel_size=5)
-        self.fc1 = nn.Linear(1024, 50)
+        self.fc1 = nn.Linear(230400, 50)
         self.fc2 = nn.Linear(50, 10)
 
     def forward(self, x):
@@ -155,7 +155,7 @@ class CIFAR10_Net(nn.Module):
         x = F.relu(F.max_pool2d(self.conv2(x), 2))
         x = F.relu(F.max_pool2d(self.conv3(x), 2))
         print(x.shape)
-        x = x.view(-1, 1024)
+        x = x.view(-1, 230400)
         print(x.shape)
         e1 = F.relu(self.fc1(x))
         x = F.dropout(e1, training=self.training)
